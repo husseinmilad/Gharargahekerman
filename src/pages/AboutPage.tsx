@@ -73,11 +73,18 @@ export function AboutPage() {
           این نرم‌افزار به‌صورت PWA طراحی شده و روی اندروید، iOS و ویندوز نصب می‌شود. نسخه APK اندروید نیز
           از مخزن گیت‌هاب پروژه با GitHub Actions ساخته می‌شود.
         </p>
-        <a className="btn btn-ghost btn-sm" href="https://github.com/husseinmilad/Gharargahekerman/releases" target="_blank" rel="noopener noreferrer" style={{ alignSelf: 'flex-start' }}>
+        <a
+          className="btn btn-ghost btn-sm"
+          href="https://github.com/husseinmilad/Gharargahekerman/releases/download/latest-android/gharargah-kerman-1.0.0.apk"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ alignSelf: 'flex-start' }}
+        >
           <Github size={14} />
-          دریافت نسخه اندروید
+          دریافت فایل APK اندروید
           <ExternalLink size={12} />
         </a>
+        <span className="tiny dim">نسخه ۱.۰.۰ — نصب مستقیم، بدون نیاز به گوگل‌پلی</span>
       </div>
 
       <div className="grid-2" style={{ gap: 10 }}>
