@@ -419,7 +419,10 @@ function EventCard({ event, isLive, onClick }: { event: EventItem; isLive: boole
       <span className="event-thumb">
         <SmartImage src={event.image} alt="" />
         {!event.image && (
-          <span className="event-thumb placeholder" style={{ width: '100%', height: '100%' }}>
+          <span
+            className="event-thumb placeholder"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', minHeight: 0 }}
+          >
             <CalendarDays size={26} />
           </span>
         )}

@@ -905,6 +905,23 @@ button:focus-visible {
   gap: 10px;
   margin-top: 6px;
 }
+.hero-kicker::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-300);
+  box-shadow: 0 0 8px rgba(245, 215, 142, 0.9);
+  animation: live-pulse 2.6s infinite;
+}
+.hero-title .gold {
+  position: relative;
+  background: linear-gradient(135deg, #f7e3ae, #d6a84f 72%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--gold-300);
+}
 
 /* ---------------- Weather card ---------------- */
 
@@ -1741,6 +1758,8 @@ button:focus-visible {
   gap: 10px;
 }
 .stat-card {
+  text-align: right;
+  transition: transform 160ms var(--ease), border-color 160ms var(--ease);
   padding: 14px;
   border-radius: var(--radius-md);
   background: linear-gradient(150deg, rgba(30, 74, 58, 0.5), rgba(7, 27, 19, 0.6));
