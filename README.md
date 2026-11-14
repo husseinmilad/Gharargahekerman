@@ -50,13 +50,15 @@ npm run android:icons      # آیکون‌ها و اسپلش‌های اندرو
 2. در گیت‌هاب: **Settings → Pages → Source: GitHub Actions**.
 3. ورک‌فلوی `Deploy to GitHub Pages` (`.github/workflows/deploy.yml`) به‌طور خودکار برنامه را می‌سازد و منتشر می‌کند.
 
-آدرس نهایی معمولاً به شکل زیر است:
+> **تنها یک مرحله دستی لازم است:** در گیت‌هاب به **Settings → Pages** بروید و در بخش *Build and deployment* گزینه **Source = GitHub Actions** را انتخاب کنید. (این تنظیم با توکن فعلی قابل تغییر خودکار نیست.) پس از آن، هر push به `main` سایت را به‌روزرسانی می‌کند.
+
+آدرس نهایی:
 
 ```
-https://<username>.github.io/Gharargahekerman/
+https://husseinmilad.github.io/Gharargahekerman/
 ```
 
-پس از باز شدن، از منوی مرورگر گوشی گزینه **«افزودن به صفحه اصلی» / «نصب برنامه»** را بزنید تا نرم‌افزار مثل یک اپ نصب شود (روی اندروید، iOS و ویندوز).
+پس از باز شدن، از منوی مرورگر گوشی گزینه **«افزودن به صفحه اصلی» / «نصب برنامه»** را بزنید تا نرم‌افزار مثل یک اپ نصب شود (روی اندروید، iOS و ویندوز). نسخه build با مسیرهای نسبی ساخته می‌شود، بنابراین در مسیرهای زیرپوشه‌ای (مثل GitHub Pages) هم بدون تغییر کار می‌کند.
 
 ---
 
@@ -66,6 +68,12 @@ https://<username>.github.io/Gharargahekerman/
 
 - ورک‌فلوی `Build Android APK` با هر push به `main` اجرا می‌شود.
 - فایل APK در **Releases** با برچسب `latest-android` منتشر می‌شود (و در تب Actions به‌عنوان artifact قابل دانلود است).
+
+**دریافت مستقیم نسخه اندروید:**
+
+👇 [دانلود APK نسخه ۱.۰.۰](https://github.com/husseinmilad/Gharargahekerman/releases/download/latest-android/gharargah-kerman-1.0.0.apk)
+
+> این APK با کلید debug امضا شده و روی همه گوشی‌های اندروید (۷ به بالا) نصب می‌شود؛ برای انتشار در گوگل‌پلی باید با کلید release و به‌صورت AAB امضا شود.
 - برای نسخه‌دار: تگ بزنید (`git tag v1.0.0 && git push --tags`).
 
 ### ساخت دستی روی سیستم خود
