@@ -44,7 +44,18 @@ jobs:
           echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
           echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
           echo "sdk.dir=$SDK" > android/local.properties
-          ls "$SDK/platforms" 2>/dev/null | tail -3 || true
+          echo "--- SDK contents ---"
+          ls "$SDK" || true
+          ls "$SDK/platforms" 2>/dev/null | tail -5 || true
+          echo "--- install missing SDK parts ---"
+          SDKM="$(find "$SDK/cmdline-tools" -name sdkmanager -type f 2>/dev/null | head -1)"
+          if [ -n "$SDKM" ]; then
+            yes | "$SDKM" --licenses > /dev/null 2>&1 || true
+            "$SDKM" "platform-tools" "platforms;android-35" "build-tools;35.0.0" > /dev/null 2>&1 || true
+          else
+            echo "sdkmanager not found — relying on preinstalled packages"
+          fi
+          ls "$SDK/platforms" 2>/dev/null | tail -5 || true
 
       - name: Sync Capacitor (Android)
         run: npx cap sync android
@@ -53,7 +64,23 @@ jobs:
         working-directory: android
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          set -o pipefail
+          ./gradlew assembleDebug --no-daemon --stacktrace 2>&1 | tee /tmp/gradle.log
+
+      - name: Report build log on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -f /tmp/gradle.log ]; then
+            {
+              echo '```'
+              tail -c 12000 /tmp/gradle.log
+              echo '```'
+            } > /tmp/comment.md
+            gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" -F body=@/tmp/comment.md > /dev/null 2>&1 || \
+            gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" -f body="Android build failed — see Actions log." > /dev/null 2>&1 || true
+          fi
 
       - name: Prepare release directory
         run: |
