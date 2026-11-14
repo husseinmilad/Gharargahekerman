@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E3D2C"/>
+      <stop offset=".55" stop-color="#082018"/>
+      <stop offset="1" stop-color="#04120D"/>
+    </linearGradient>
+    <linearGradient id="em" x1="150" y1="110" x2="380" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6EE7B7"/>
+      <stop offset=".55" stop-color="#2FBF8F"/>
+      <stop offset="1" stop-color="#0F8F68"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="180" y1="150" x2="340" y2="400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7E3AE"/>
+      <stop offset="1" stop-color="#D6A84F"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".32" r=".6">
+      <stop stop-color="#2FBF8F" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#2FBF8F" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="512" height="512" rx="112" fill="url(#glow)"/>
+  <circle cx="256" cy="248" r="168" fill="none" stroke="#6EE7B7" stroke-opacity=".18" stroke-width="2"/>
+  <path d="M256 92c57 21 108 28 155 25v150c0 76-58 134-155 181-97-47-155-105-155-181V117c47 3 98-4 155-25Z"
+        fill="#2FBF8F" fill-opacity=".16" stroke="url(#em)" stroke-width="9"/>
+  <path d="M256 150c-37 18-67 25-96 25v82c0 47 34 81 96 112 62-31 96-65 96-112v-82c-29 0-59-7-96-25Z"
+        fill="#2FBF8F" fill-opacity=".3" stroke="url(#gold)" stroke-width="7"/>
+  <path d="M256 200c16 12 31 18 49 20v26c0 10-.2 18-6 27l-43 55-43-55c-5.8-9-6-17-6-27v-26c18-2 33-8 49-20Z"
+        fill="url(#gold)"/>
+  <circle cx="256" cy="252" r="15" fill="#062019" fill-opacity=".55"/>
+  <path d="M256 122l9 17 19 3-13 14 3 19-18-9-18 9 3-19-13-14 19-3 9-17Z" fill="#F7E3AE"/>
+  <path d="M150 400c15 4 27 13 34 27M362 400c-15 4-27 13-34 27" stroke="url(#gold)" stroke-width="8" stroke-linecap="round" opacity=".72"/>
+</svg>

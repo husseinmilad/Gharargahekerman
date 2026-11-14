@@ -1,0 +1,84 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web assets
+        run: npm run build
+
+      - name: Generate Android icons & splash
+        run: npm run android:icons
+
+      - name: Sync Capacitor (Android)
+        run: npx cap sync android
+
+      - name: Build debug APK
+        working-directory: android
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Prepare release directory
+        run: |
+          mkdir -p release
+          VERSION="$(node -p "require('./package.json').version")"
+          cp android/app/build/outputs/apk/debug/app-debug.apk "release/gharargah-kerman-${VERSION}.apk"
+          # برای نصب ساده، نسخه debug امضا شده و روی همه گوشی‌ها نصب می‌شود
+          ls -lh release
+
+      - name: Upload APK as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gharargah-kerman-apk
+          path: release/*.apk
+          retention-days: 90
+
+      - name: Publish APK to Releases (on tag or main)
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/v') || github.ref == 'refs/heads/main'
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || 'latest-android' }}
+          name: نسخه اندروید قرارگاه کرمان
+          body: |
+            نصب مستقیم نرم‌افزار «قرارگاه مردمی مدافعان وطن — محله کرمان» روی اندروید.
+
+            راهنمای نصب:
+            1. فایل APK را دانلود کنید.
+            2. اگر پیام «نصب از منابع ناشناس» آمد، اجازه نصب را بدهید.
+            3. برنامه را باز کنید و اعلان‌ها را فعال کنید.
+
+            نسخه وب (PWA) هم به‌صورت کامل روی مرورگر گوشی و دسکتاپ نصب‌شدنی است.
+          files: release/*.apk
+          make_latest: true
+          fail_on_unmatched_files: true
